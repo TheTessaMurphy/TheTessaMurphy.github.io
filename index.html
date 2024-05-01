@@ -16,7 +16,7 @@ xmlhttp.onload = function() {
   const myObj = JSON.parse(this.responseText);
   document.getElementById("demo").innerHTML = myObj.name;
 }
-xmlhttp.open("GET", "Data/flashCards.json");
+xmlhttp.open("GET", "demo.json");
 xmlhttp.send();
 </script>
 
