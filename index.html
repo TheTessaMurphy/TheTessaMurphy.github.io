@@ -5,7 +5,7 @@
 
 </head>
 <body>
-<div id="card">hello world</div>
+<div id="card">hello there</div>
 
   <h2>Fetch a JSON file with XMLHttpRequest</h2>
 <p id="demo"></p>
@@ -14,9 +14,9 @@
 const xmlhttp = new XMLHttpRequest();
 xmlhttp.onload = function() {
   const myObj = JSON.parse(this.responseText);
-  document.getElementById("demo").innerHTML = JSON.stringify(myObj.pets);
+  document.getElementById("demo").innerHTML = JSON.stringify(myObj.flash);
 }
-xmlhttp.open("GET", "Data/demo.json");
+xmlhttp.open("GET", "flashCards/demo.json");
 xmlhttp.send();
 </script>
 
