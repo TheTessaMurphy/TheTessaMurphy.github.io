@@ -6,5 +6,19 @@
 </head>
 <body>
 <div id="card">hello world</div>
+
+  <h2>Fetch a JSON file with XMLHttpRequest</h2>
+<p id="demo"></p>
+
+<script>
+const xmlhttp = new XMLHttpRequest();
+xmlhttp.onload = function() {
+  const myObj = JSON.parse(this.responseText);
+  document.getElementById("demo").innerHTML = myObj.name;
+}
+xmlhttp.open("GET", "flashCards.json");
+xmlhttp.send();
+</script>
+
 </body>
 </html>
