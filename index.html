@@ -5,7 +5,7 @@
 
 </head>
 <body>
-<div id="card">Today is Thursday</div>
+<div id="card">Today is Thurs</div>
 
   <h2>Fetch a JSON file with XMLHttpRequest</h2>
 <p id="demo"></p>
@@ -21,7 +21,7 @@ xmlhttp.open("GET", "Data/flashCards.json");
 xmlhttp.send();
 
 var arrDays = JSON.parse(localStorage.getItem("days"));
-document.getElementById("daysDemo").innerHTML = JSON.stringify(arrDays);
+document.getElementById("daysDemo").innerHTML = JSON.stringify("Here" + arrDays);
 </script>
 
 </body>
