@@ -18,6 +18,21 @@ xmlhttp.onload = function() {
 }
 xmlhttp.open("GET", "Data/flashCards.json");
 xmlhttp.send();
+
+/*fetch('yourfilename.php', {
+    method: 'POST',
+    body: JSON.stringify(yourArrayInJavascript),
+    headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+    }
+})
+.then(function (response)  {
+    return response.text();
+})
+.then(function (data)  {
+    console.log(data);
+});*/
+
 </script>
 
 </body>
