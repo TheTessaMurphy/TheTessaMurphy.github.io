@@ -5,11 +5,12 @@
 
 </head>
 <body>
-<div id="card">hi now</div>
+<div id="card">Today is Thursday</div>
 
   <h2>Fetch a JSON file with XMLHttpRequest</h2>
 <p id="demo"></p>
-
+<p></p>
+<p id = "dayDemo"></p>
 <script>
 const xmlhttp = new XMLHttpRequest();
 xmlhttp.onload = function() {
@@ -19,20 +20,8 @@ xmlhttp.onload = function() {
 xmlhttp.open("GET", "Data/flashCards.json");
 xmlhttp.send();
 
-/*fetch('yourfilename.php', {
-    method: 'POST',
-    body: JSON.stringify(yourArrayInJavascript),
-    headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-    }
-})
-.then(function (response)  {
-    return response.text();
-})
-.then(function (data)  {
-    console.log(data);
-});*/
-
+var arrDays = JSON.parse(localStorage.getItem("days"));
+document.getElementById("daysDemo").innerHTML = JSON.stringify(arrDays);
 </script>
 
 </body>
