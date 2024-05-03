@@ -4,4 +4,14 @@
       $user = json_decode($data, true);
       
       // do whatever we want with the users array.
-   }
+
+
+      //$json = json_encode($user);
+ 
+
+ 
+// Generate json file
+file_put_contents("testJson.json", $user);
+}
+ ?>
+   
