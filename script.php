@@ -8,7 +8,7 @@
 
       //$json = json_encode($user);
  
-
+echo "$json";
  
 // Generate json file
 file_put_contents("testJson.json", $user);
