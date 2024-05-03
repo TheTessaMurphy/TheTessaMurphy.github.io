@@ -6,7 +6,7 @@
       // do whatever we want with the users array.
 
 
-      //$json = json_encode($user);
+      $json = json_encode($user);
  
 echo "$json";
  
