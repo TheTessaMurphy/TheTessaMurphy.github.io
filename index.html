@@ -5,7 +5,7 @@
 
 </head>
 <body>
-<div id="card">Today is fri-2</div>
+<div id="card">Today is fri-3</div>
 
   <h2>Fetch a JSON file with XMLHttpRequest</h2>
 <p id="demo"></p>
@@ -29,7 +29,13 @@ http.open('post', "script.php", true);
 http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 http.send(jsonString);  
   
-  
+const xmlhttp = new XMLHttpRequest();
+xmlhttp.onload = function() {
+  const myObj = JSON.parse(this.responseText);
+  document.getElementById("demo").innerHTML = myObj.name;
+}
+xmlhttp.open("GET", "script.php");
+xmlhttp.send();  
   
   
   
