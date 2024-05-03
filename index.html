@@ -20,6 +20,19 @@ xmlhttp.onload = function() {
 xmlhttp.open("GET", "Data/flashCards.json");
 xmlhttp.send();
 
+const temp = [{"todo":"practice guitar","checked":"false","bold":"true","day":"Everyday","time":"11:44:27 AM","date":"3/25/2024"},{"todo":"Practice Spanish ","checked":"false","bold":"true","day":"Everyday","time":"8:28:16 AM","date":"3/27/2024"},{"todo":"Dust living room","checked":"false","bold":"true","day":"Friday","time":"8:26:49 AM","date":"4/5/2024"},{"todo":"water plants","checked":"false","bold":"true","day":"Thursday","time":"2:28:33 PM","date":"4/5/2024"},{"todo":"Clean bathroom","checked":"false","bold":"true","day":"Friday","time":"2:29:21 PM","date":"4/5/2024"},{"todo":"Mop Bathroom Floor","checked":"false","bold":"true","day":"Saturday","time":"8:41:24 AM","date":"4/6/2024"},{"todo":"Turn on plant lights","checked":"false","bold":"true","day":"Everyday","time":"10:21:00 AM","date":"4/14/2024"},{"todo":"boil eggs","checked":"false","bold":"true","day":"Monday","time":"7:17:25 AM","date":"4/15/2024"},{"todo":"unemployment","checked":"false","bold":"true","day":"Monday","time":"8:52:19 AM","date":"4/15/2024"},{"todo":"Look for a job","checked":"false","bold":"true","day":"Monday","time":"10:27:57 PM","date":"4/15/2024"},{"todo":"Make bread","checked":"false","bold":"true","day":"Wednesday","time":"12:03:41 AM","date":"4/17/2024"},{"todo":"Write Monti","checked":"false","bold":"true","day":"Everyday","time":"11:28:14 AM","date":"4/18/2024"},{"todo":"Look for work","checked":"false","bold":"true","day":"Tuesday","time":"1:12:57 AM","date":"4/23/2024"},{"todo":"morning vitamins","checked":"false","bold":"true","day":"Everyday","time":"11:11:11 PM","date":"5/1/2024"}]
+ 
+jsonString = JSON.stringify(temp);
+let http = new XMLHttpRequest();
+ 
+http.open('post', "script.php", true);
+http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+http.send(jsonString);  
+  
+  
+  
+  
+  
 var arrDays = JSON.parse(localStorage.getItem("days"));
 document.getElementById("daysDemo").innerHTML = JSON.stringify("Here" + arrDays);
 </script>
