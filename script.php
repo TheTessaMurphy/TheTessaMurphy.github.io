@@ -5,13 +5,13 @@
       
       // do whatever we want with the users array.
 
-
-     // $json = json_encode($user);
+}
+     $json = json_encode($user);
  
 echo "$user";
  
 // Generate json file
-//file_put_contents("testJson.json", json);
-}
+file_put_contents("testJson.json", json);
+
  ?>
    
