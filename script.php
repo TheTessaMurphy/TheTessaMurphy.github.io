@@ -11,7 +11,7 @@
 echo "$user";
  
 // Generate json file
-file_put_contents("testJson.json", json);
+file_put_contents("testJson.json", $json);
 
  ?>
    
