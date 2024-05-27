@@ -1,0 +1,74 @@
+code {
+  color: rgb(207, 32, 32);
+}
+
+.language-javascript{
+  background-color: rgb(241, 239, 239);
+  text-indent: 10px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.language-html{
+  background-color: rgb(241, 239, 239);
+  text-indent: 10px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.language-text{
+  background-color: rgb(241, 239, 239);
+  font-size: 16px;
+  padding: 10px;
+}
+
+.hljs-title{
+  padding: 0;
+}
+
+function_{
+  padding: 0;
+}
+
+.htmlcode {
+  background-color: rgb(241, 239, 239);
+  text-indent: 10px;
+  font-size: 16px;
+  padding: 10px;
+  margin-left: 11px;
+  color: blue;
+
+}
+
+body{
+  margin-left: 15%;
+  margin-right: 15%;
+  font-size: 20px;
+}
+
+.note{
+  background-color: rgba(201, 219, 252, 0.459);
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+  border: none;
+  margin-top: 1%;
+  margin-bottom: 5%;
+}
+
+h2{
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
+h3{
+  margin-top: 3%;
+  margin-bottom: 1%;
+}
+
+/* visited link */
+a:visited {
+  color: rgb(148, 14, 148)
+}
