@@ -1,1 +1,500 @@
-Hello World
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>How to Write-To and Read-From a JSON file</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <link rel="stylesheet" href="css/markdown.css">
+<h1 id="how-to-write-to-and-read-from-a-json-file">How to Write-To and Read-From a JSON file</h1>
+<h2 id="introduction">Introduction</h2>
+<p>If you're a front-end developer who needs to store and then retrieve information that didn't come from a form, this article is for you. Since  you're here, I'm going to assume you've decided you want to save your information to a file rather than Local Storage, and that you've already chosen Node.js
+as your backend.</p>
+<p>I'm also going to assume that you're comfortable with Javascript, have a basic knowledge of <a href="https://www.w3schools.com/js/js_json_intro.asp">JSON</a>, and have already installed Node.js.</p>
+<p>This artice  will walk you through the process of posting information to a JSON file and then retrieving it. It's not comprehensive — there are any number of ways
+to read and write to a file — but it will get the job done, get you familiar with the process, and provide a jumping off point if you decide you'd like
+to learn more about backend development.</p>
+<p>This article will show you how to:</p>
+<ul>
+<li><a href="#set-up-the-project">Set-up Your Project</a></li>
+<li><a href="#install-express">Install Express</a></li>
+<li><a href="#set-up-a-server-in-express">Create an Express Server</a></li>
+<li><a href="#post-to-a-json-file">Post to your JSON File</a></li>
+<li><a href="#read-from-your-json-file">Read from your JSON File</a></li>
+</ul>
+<p class = "note"><b>NOTE:</b> A word about the Express framework, if you're not familiar with it. First, it's the most popular framework for Node.js, which means that it's well-supported, and that there's a lot of information about how to use it out on the internet.  Most important, it's painless to install and greatly simplifies your life by doing a lot of the development set-up tasks for you.</p>
+<h2 id="set-up-the-project"><a id="set-up-the-project"></a>Set-up the Project</h2>
+<ol>
+<li>Create a directory to contain your project. I named mine <em>'ExpressProject'</em>.</li>
+<li>Within that directory, create a folder named <em>'public'.</em></li>
+<li>At your terminal command prompt, navigate to your Express project.</li>
+<li>In your project directory, create a file called <em>server.js</em></li>
+<li>In your <em>'public'</em> directory, create an <em>index.html</em> file.</li>
+</ol>
+<h2 id="install-express"><a id="install-express"></a>Install Express</h2>
+<p class="note"><b>NOTE:</b> If you have already installed Express, you can skip to the next step, <a href="#set-up-a-server-in-express">Set Up a Server in Express</a></p>
+<p>Use the <em>npm init</em> command to create a package.json file for your application.
+In the terminal, type:</p>
+<pre><code class="language-text">npm init
+</code></pre>
+<p>The installation will prompt you through your setup. For this project, go ahead and press Enter to accept the defaults — <strong>except for one prompt</strong>:</p>
+<pre><code class="language-text"> entry point: (index.js)
+</code></pre>
+<p>At this prompt, change <em><strong>index.js</strong></em> to <em><strong>server.js</strong></em> This will be the name of your main file,
+and is the name I will be using throughout this article.</p>
+<p class = "note"><b>NOTE:</b> If you forget or accidentally miss this step, you can change the name in the <i>package.json</i> file, found in the main directory of your project. For more information about *package.json* go to <a href = "https://docs.npmjs.com/cli/v10/configuring-npm/package-json">package.json </a>
+in the npm docs.</p>
+<p>Now, install the Express framework:</p>
+<pre><code class="language-text">npm install express
+</code></pre>
+<p>That's it. Step one accomplished.</p>
+<h2 id="set-up-a-server-in-express"><a id="set-up-a-server-in-express"></a>Set Up a Server in Express</a></h2>
+<p>One of the great advantages of Node.js as a back-end language is that it comes with it's own server, and one of the lovely things about
+Express is that it makes it very easy to set up that server.</p>
+<p>Open your <em>server.js</em> file and paste the following code into it:</p>
+<pre><code class="language-javascript">
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>)      <span class="hljs-comment">//creates the Express application</span>
+<span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>()
+<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>                       <span class="hljs-comment">//The port that index.html runs on.</span>
+                                        <span class="hljs-comment">//See note below.</span>
+
+
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {            <span class="hljs-comment">// Defines a route for handling client communication.</span>
+  res.<span class="hljs-title function_">send</span>(index.<span class="hljs-property">html</span>)
+})
+
+app.<span class="hljs-title function_">listen</span>(port, <span class="hljs-function">() =&gt;</span> {                <span class="hljs-comment">//Starts the server and listens on port 3000 for connections.</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Server listening on port <span class="hljs-subst">${port}</span>`</span>)
+})
+</code></pre>
+<p class = "note"><b>NOTE:</b> There's nothing particularly magic about the number 3000. It's often chosen because it allows you to experiment with Express on your local machine
+without elevated privilege/root access. Ports 8000 and 8080 are also often used. Ports 80 and 443 are the default HTTP and HTTPS ports but they require elevated privilege in most environments, as do most ports below 1024.</p>
+<h2 id="post-to-a-json-file"><a id="post-to-a-json-file"></a>Post to a JSON File</h2>
+<p>So now we've reached the good stuff. Let's start with the HTML.</p>
+<h3 id="html">HTML</h3>
+<p>Open your <em>index.html</em> file and paste the following code into it.</p>
+<pre><code class="language-html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>ExpressProject<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Reading and Writing to a JSON file<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;btnPost&quot;</span>&gt;</span>Post<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;btnGet&quot;</span>&gt;</span>Get<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span> = <span class="hljs-string">&quot;output&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>Not a lot of explanation needed here. You've created an HTML file with a heading, two buttons, and an output paragraph.</p>
+<p>Let's carry on.</p>
+<h3 id="client-side-javascript">Client-side Javascript</h3>
+<p>Add a script section to <em>index.html</em>, and paste the followinging code into it. It should look like so:</p>
+<pre><code class="language-javascript">&lt;script&gt;
+  
+    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;btnPost&quot;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, postToJSON); 
+    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;btnGet&quot;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, getFromFile); 
+
+
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">postToJSON</span>(<span class="hljs-params"></span>){
+    
+      <span class="hljs-comment">//Variables containing data in different formats.</span>
+      <span class="hljs-keyword">var</span> numbers = [<span class="hljs-string">&quot;1942&quot;</span>, <span class="hljs-string">&quot;1984&quot;</span>, <span class="hljs-string">&quot;1995&quot;</span>];
+      <span class="hljs-keyword">var</span> singers = [{<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;Paul McCartney&quot;</span>,<span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-string">&quot;81&quot;</span>, <span class="hljs-string">&quot;birthplace&quot;</span>: <span class="hljs-string">&quot;Liverpool&quot;</span>},{<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;Taylor Swift &quot;</span>,<span class="hljs-string">&quot;age&quot;</span>:<span class="hljs-string">&quot;34&quot;</span>,<span class="hljs-string">&quot;birthplace&quot;</span>:<span class="hljs-string">&quot;West Reading, PA&quot;</span>}];
+      <span class="hljs-keyword">var</span> greeting = <span class="hljs-string">&quot;Are we having fun yet?&quot;</span>;
+      <span class="hljs-keyword">var</span> foods = {<span class="hljs-string">&quot;food&quot;</span> : <span class="hljs-string">&quot;chocolate&quot;</span>, <span class="hljs-string">&quot;taste&quot;</span>:<span class="hljs-string">&quot;very very good&quot;</span>, <span class="hljs-string">&quot;necessary&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>};
+    
+      <span class="hljs-comment">//Variable containing the info that will be posted</span>
+      <span class="hljs-keyword">var</span> data = {<span class="hljs-attr">numbers</span>:numbers, <span class="hljs-attr">singers</span>:singers, <span class="hljs-attr">greeting</span>:greeting, <span class="hljs-attr">foods</span>:foods} 
+      
+      <span class="hljs-comment">/*To post to a file, you need the POST method,
+        headers that define the type of content, in this
+        case JSON, and the body, which defines the data 
+         you want to send to your JSON file.*/</span> 
+      <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;/amendJsonFile&#x27;</span>, {                 <span class="hljs-comment">//the url your sending your data to.</span>
+          <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,
+          <span class="hljs-attr">headers</span>: {
+              <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,
+    },
+          <span class="hljs-attr">body</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data)
+    
+      })
+     
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.<span class="hljs-title function_">json</span>())          <span class="hljs-comment">//Receives a response</span>
+        <span class="hljs-keyword">if</span> (!response.<span class="hljs-property">ok</span>) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;something went wrong&#x27;</span>);  
+    }
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> <span class="hljs-title function_">alert</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data)))  <span class="hljs-comment">//processes the message returned. </span>
+      .<span class="hljs-title function_">catch</span>(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(error));        <span class="hljs-comment">//catches errors</span>
+    }
+
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">getFromFile</span>(<span class="hljs-params"></span>){
+      
+    }
+  
+  &lt;/script&gt;
+</code></pre>
+<p>In this code you've created two event listeners for the buttons, and a function.</p>
+<p>In the function, you've defined four variables: an array, an array of objects, a string, and an object. I'm going to post all four of them to our JSON file, which
+hasn't been created yet.  (We'll get to that.)</p>
+<p>Data is posted to and retrieved from a JSON file in key-value pairs, so you've defined a variable, <code>data</code>, that contains the key value pairs you will be posting. For simplicity,
+and ease of retrieval, our key names match the names of the variables that hold the values.</p>
+<p class = "note"><b>NOTE:</b> For demonstration purposes all four variables are posted, but this is arbitrary. You could just have easily sent one, or many more.</p>
+<p>You're using the fetch API to send your request. The fetch API is straightforward and more or less replaces XMLHttpRequest. You give it the url you'll be sending your data to, (in this case <em>amendJsonFile</em>) define the type of content you're sending, define the data you're sending, process the response, and catch any errors. If you'd rather not receive a response, you can remove these lines of code:</p>
+<pre><code class="language-javascript"><span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.<span class="hljs-title function_">json</span>())          
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> <span class="hljs-title function_">alert</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data)))
+</code></pre>
+<p>Note that the data has been stringified (<code>JSON.stringify(data)</code>) in order to pack it into an http request sent to the server.</p>
+<p class = "note"><b>NOTE:</b> <a href="https://www.freecodecamp.org/news/how-to-fetch-data-from-an-api-using-the-fetch-api-in-javascript/#:~:text=The%20Fetch%20API%20is%20a,and%20fetch%20data%20from%20servers.">This article</a> by freeCodeCamp is an excellent resource for learning how to use fetch.</p>
+<p>And now for the server side of things.</p>
+<h3 id="server-side-javascript"><a id="server-side-javascript"></a>Server-side Javascript.</h3>
+<p>In order to post and then write to a file, you will add a couple of lines of code to your server file, <em>server.js</em>.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+ app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">json</span>());
+</code></pre>
+<p><code>var fs = require('fs');</code> allows us to read and write to a file.</p>
+<p><code>app.use(express.json());</code> parses the JSON info coming in.</p>
+<p>Open your server file and paste those lines into it. Your file should look like this:</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);
+ <span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>();
+ <span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+ <span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
+ 
+ <span class="hljs-comment">//Parses the JSON info coming in.</span>
+ app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">json</span>()); 
+
+ <span class="hljs-comment">// Serving static files (HTML, CSS, JS)</span>
+ app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;public&#x27;</span>))
+   
+ <span class="hljs-comment">// Defines a route for handling client communication</span>
+ app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) { 
+    res.<span class="hljs-title function_">sendFile</span>(<span class="hljs-string">&quot;index.html&quot;</span>); 
+ }); 
+
+ <span class="hljs-comment">// Starting the server</span>
+ app.<span class="hljs-title function_">listen</span>(port, <span class="hljs-function">() =&gt;</span> {
+     <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Server is listening at http://localhost:<span class="hljs-subst">${port}</span>`</span>);
+ });
+</code></pre>
+<p>Now you will add the POST request method that writes your data to a JSON file. Paste the following code into your <em>server.js</em> file.</p>
+<pre><code class="language-javascript">app.<span class="hljs-title function_">post</span>(<span class="hljs-string">&quot;/amendJsonFile&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>){
+
+  <span class="hljs-keyword">var</span> newStr = req.<span class="hljs-property">body</span>;
+  <span class="hljs-keyword">var</span> key = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(newStr);
+  <span class="hljs-keyword">var</span> obj;
+  <span class="hljs-keyword">var</span> file = <span class="hljs-string">&quot;public/myJson.json&quot;</span>;     
+
+  <span class="hljs-comment">//Check if file exists. If it does, read file.</span>
+  <span class="hljs-keyword">if</span> (fs.<span class="hljs-title function_">existsSync</span>(file)) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;file exists&#x27;</span>);
+    fs.<span class="hljs-title function_">readFile</span>(file, <span class="hljs-string">&#x27;utf8&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) {
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+
+      <span class="hljs-comment">//if the JSON file is empty, use newStr for data</span>
+      <span class="hljs-keyword">if</span> (data == []){
+        data = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(newStr);
+      }   
+
+      <span class="hljs-comment">/* On the client side, you had to stringify the data in order to send it. To work with it, you
+      must  parse it back into JSON format again.*/</span>
+      obj = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(data);
+
+    <span class="hljs-comment">//Update each record </span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; key.<span class="hljs-property">length</span>; i++){
+      obj[key[i]] = newStr[key[i]];
+    }     
+
+    <span class="hljs-comment">//Then write it to file.</span>
+    fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&quot;file&quot;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>), <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) {
+        <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    });
+  });
+
+  <span class="hljs-comment">//If it&#x27;s a new file, create and write newStr to it.</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;file not found&#x27;</span>);
+
+    fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&quot;file&quot;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(newStr, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>), <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) {
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    });
+  }
+
+  res.<span class="hljs-title function_">json</span>(<span class="hljs-string">`Data posted to file`</span>); 
+
+});
+</code></pre>
+<p>Your file should look like this:</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);
+<span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>();
+<span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">const</span> port = <span class="hljs-number">3000</span>;
+ 
+<span class="hljs-comment">//Parses the JSON info coming in.</span>
+app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">json</span>()); 
+
+<span class="hljs-comment">// Serving static files (HTML, CSS, JS)</span>
+app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;public&#x27;</span>))
+   
+<span class="hljs-comment">// Defines a route for handling client communication</span>
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) { 
+    res.<span class="hljs-title function_">sendFile</span>(<span class="hljs-string">&quot;index.html&quot;</span>); 
+}); 
+
+app.<span class="hljs-title function_">post</span>(<span class="hljs-string">&quot;/amendJsonFile&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>){
+
+  <span class="hljs-keyword">var</span> newStr = req.<span class="hljs-property">body</span>;
+  <span class="hljs-keyword">var</span> key = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(newStr);
+  <span class="hljs-keyword">var</span> obj;
+  <span class="hljs-keyword">var</span> file = <span class="hljs-string">&quot;public/myJson.json&quot;</span>;     
+
+  <span class="hljs-comment">//Check if file exists. If it does, read file.</span>
+  <span class="hljs-keyword">if</span> (fs.<span class="hljs-title function_">existsSync</span>(file)) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;file exists&#x27;</span>);
+    fs.<span class="hljs-title function_">readFile</span>(file, <span class="hljs-string">&#x27;utf8&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) {
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+
+      <span class="hljs-comment">//if the JSON file is empty, use newStr for data</span>
+      <span class="hljs-keyword">if</span> (data == []){
+        data = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(newStr);
+      }   
+
+      <span class="hljs-comment">/* On the client side, you had to stringify the data in order to send it. To work with it, you
+      must  parse it back into JSON format again.*/</span>
+      obj = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(data);
+
+    <span class="hljs-comment">//Update each record </span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; key.<span class="hljs-property">length</span>; i++){
+      obj[key[i]] = newStr[key[i]];
+    }     
+
+    <span class="hljs-comment">//Then write it to file.</span>
+    fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&quot;file&quot;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>), <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) {
+        <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    });
+  });
+
+  <span class="hljs-comment">//If it&#x27;s a new file, create and write newStr to it.</span>
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;file not found&#x27;</span>);
+
+    fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&quot;file&quot;</span>, <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(newStr, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>), <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) {
+      <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+    });
+  }
+
+  res.<span class="hljs-title function_">json</span>(<span class="hljs-string">`Data posted to file`</span>); 
+
+});
+
+<span class="hljs-comment">// Starting the server</span>
+app.<span class="hljs-title function_">listen</span>(port, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Server is listening at http://localhost:<span class="hljs-subst">${port}</span>`</span>);
+});
+</code></pre>
+<p>This code contains four variables. The first, <code>newStr</code>, pulls in the data sent by the client.</p>
+<p>The second variable, <code>key</code>, then pulls just the keys from that data.</p>
+<p><code>obj</code> is left empty because its value changes based on the result of different if statements.</p>
+<p><code>file</code> is the JSON file you will be writing to.</p>
+<p>I've documented the code so you can see each step in context. Essentially, the method reads, updates, and writes to the JSON file. But if that file doesn't exist, an error is thrown when it tries to read the file. So, first you check to see if the file exists.</p>
+<p>if the file doesn't exist, then <code>newString</code> is written to the JSON file.</p>
+<p>It the file does exist, it's opened and and its contents read into the <code>obj</code> variable.</p>
+<p>On the client side, you had to stringify the data. In order to work with it, you need to parse it back into JSON format again. Then, using a for loop,
+each record from <code>newstring</code> is individually pushed into <code>obj</code>. If the record doesn't yet exist, it is added. If the record exists, it is updated with the value from <code>newStr</code>.
+This is the code that allows you to update individual records in your file. Without it, you would have to send all your data, every time.</p>
+<p>Finally, the data in <code>obj</code> is stringified again and written to the file.</p>
+<p>This function covers all bases. It allows you to create the file, add more records, or update the records you've already written. You can can add or amend one or multiple records.</p>
+<p>Now let's see it in action.</p>
+<h3 id="pulling-it-all-together">Pulling It All Together</h3>
+<p>To start your server, enter the following code into your terminal:</p>
+<pre><code class="language-text">node server.js
+</code></pre>
+<p>Then go to your browser and enter:</p>
+<pre><code class="language-text">http://localhost:3000/
+</code></pre>
+<p>You should see a web page that looks like this:</p>
+<p><img src="file:///c:\Users\tessa\JS Programs\thetessamurphy.github.io\markdown\images\webpage.png" alt="Web Page"></p>
+<p>Click the <strong>Post</strong> button. You should get an alert that says &quot;Data Posted to File.&quot;</p>
+<p>Finally, you should find a <em>myJson.json</em> file in the <em>public</em> folder of your project. Open it, and you should see something like this:</p>
+<p><img src="file:///c:\Users\tessa\JS Programs\thetessamurphy.github.io\markdown\images\jsonfile.png" alt="JSON File"></p>
+<p>Congratulations! You've successfully written to a JSON file.</p>
+<h2 id="read-from-your-json-file"><a id="read-from-your-json-file"></a>Read From Your JSON File</h2>
+<p>Now that you've set up your server and created a JSON file, getting information from that file is pretty straightforward.</p>
+<p>Paste the following code into the script section of your HTML file.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getFromFile</span>(<span class="hljs-params"></span>){
+      
+      <span class="hljs-keyword">const</span> info = <span class="hljs-string">&quot;singers&quot;</span>             <span class="hljs-comment">//Defines the key of the object being retrieved.</span>
+      <span class="hljs-keyword">const</span> file = <span class="hljs-string">&quot;myJson.json&quot;</span>       <span class="hljs-comment">//Defines the file being retrieved from.</span>
+      
+      <span class="hljs-title function_">fetch</span>(file)
+
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.<span class="hljs-title function_">json</span>())   <span class="hljs-comment">//Receives a response</span>
+      .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> {                      
+              
+        <span class="hljs-keyword">const</span> obj = data[info];            <span class="hljs-comment">//Parses the response</span>
+        
+        <span class="hljs-comment">//Prints the response to the browser.</span>
+        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;output&quot;</span>).<span class="hljs-property">innerHTML</span> = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj);
+        
+      });
+</code></pre>
+<p>In this function, you define the record you want to retrieve, and the file you want to retrieve it from. In our case, we're retrieving the object array, <em>singers</em> from the JSON file, <em>myJson.json</em>.  The file is fetched, and then the record stored as &quot;singers&quot; is extracted.</p>
+<p>If instead of a single record, you wanted to extract the entire file, instead of <code>const obj = data[info], the code would be </code>const obj = data`.</p>
+<p>Once extracted, the data
+is yours to manipulate.</p>
+<p>For the purposes of this article, the variable <code>obj</code> is stringified so it can be printed to the web page. This is only necessary if you want to use it as a string.</p>
+<p>Now, start the server if it's not already running.</p>
+<pre><code class="language-text">node server.js
+</code></pre>
+<p>Go to your browser as before:</p>
+<pre><code class="language-text">http://localhost:3000/
+</code></pre>
+<p>Click the <strong>Get</strong> button. Your page should look like this:</p>
+<p><img src="file:///c:\Users\tessa\JS Programs\thetessamurphy.github.io\markdown\images\getOutput.png" alt="Output of the JSON file"></p>
+<p>Congratulations! You've successfully read from a JSON file.</p>
+<h2 id="summary">Summary</h2>
+<p>In this article you've learned how to send data to the server from the client side, how to extract that data and write to a file on the server side, and
+how to retrieve that data from the file you created. Again, this is only one way to do it. What I've tried to do is show both sides of the
+equation, the client-side and the server side, with enough explanation so that you understand how it works, and with a couple of resources thrown in if you'd like
+a deeper understanding of the steps involved.</p>
+<p>Happy Coding.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
