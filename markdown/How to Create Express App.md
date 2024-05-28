@@ -369,7 +369,7 @@ This is the code that allows you to update individual records in your file. With
 
 Finally, the data in `obj` is stringified again and written to the file. 
 
-This function covers all bases. It allows you to create the file, add more records, or update the records you've already written. You can can add or amend one or multiple records. 
+This function covers all bases. It allows you to create the file, add more records, or update the records you've already written. You can add or amend one or multiple records. 
 
 Now let's see it in action. 
 
