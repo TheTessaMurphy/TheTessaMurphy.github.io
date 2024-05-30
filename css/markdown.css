@@ -7,6 +7,7 @@ code {
   text-indent: 10px;
   font-size: 16px;
   padding: 10px;
+  
 }
 
 .language-html{
@@ -14,6 +15,8 @@ code {
   text-indent: 10px;
   font-size: 16px;
   padding: 10px;
+  display: block;
+
 }
 
 .language-text{
@@ -38,6 +41,10 @@ function_{
   margin-left: 11px;
   color: blue;
 
+}
+.note{
+  background-color: rgba(201, 219, 252, 0.459);
+  padding: 10px;
 }
 
 body{

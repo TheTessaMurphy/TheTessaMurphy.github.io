@@ -9,7 +9,7 @@ as your backend.
 
 I'm also going to assume that you're comfortable with Javascript, have a basic knowledge of <a href="https://www.w3schools.com/js/js_json_intro.asp">JSON</a>, and have already installed Node.js. 
 
-This artice  will walk you through the process of posting information to a JSON file and then retrieving it. It's not comprehensive &mdash; there are any number of ways
+This article  will walk you through the process of posting information to a JSON file and then retrieving it. It's not comprehensive &mdash; there are any number of ways
 to read and write to a file &mdash; but it will get the job done, get you familiar with the process, and provide a jumping off point if you decide you'd like
 to learn more about backend development.  
 
