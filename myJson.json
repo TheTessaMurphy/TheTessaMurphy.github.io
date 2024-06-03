@@ -1,0 +1,38 @@
+{
+  "numbers": [
+    "1942",
+    "1984",
+    "1995"
+  ],
+  "singers": [
+    {
+      "name": "James Paul McCartney",
+      "age": "81",
+      "birthplace": "Liverpool"
+    },
+    {
+      "name": "Taylor Swift ",
+      "age": "34",
+      "birthplace": "West Reading, PA"
+    }
+  ],
+  "greeting": "It is the dawning of the age of Aquarius",
+  "foods": {
+    "food": "chocolate",
+    "taste": "very very good",
+    "necessary": "true"
+  },
+  "arr1": [
+    {
+      "name": "Ringo Starr",
+      "age": "81",
+      "birthplace": "Liverpool"
+    },
+    {
+      "name": "Joni Mitchell ",
+      "age": "34",
+      "birthplace": "West Reading, PA"
+    }
+  ]
+  
+}
