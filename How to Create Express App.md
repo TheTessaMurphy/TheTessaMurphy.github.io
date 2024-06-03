@@ -1,19 +1,19 @@
-<link rel="stylesheet" href="css/markdown.css">
+<link rel="stylesheet" href="markdown.css">
 
-# How to Write To and Read From a JSON file Using Express.js
+# How to Write-To and Read-From a JSON file
 
 ## Introduction
 
-If you're a front-end developer who needs to store and then retrieve information that didn't come from a form, this article is for you. Since  you're here, I'm going to assume you've decided you want to save your information to a file rather than Local Storage, and that you've already chosen Node.js 
+If you're a front-end developer who needs to store and then retrieve information that didn't come from a form, this post is for you. Since  you're here, I'm going to assume you've decided you want to save your information to a file rather than Local Storage, and that you've already chosen Node.js 
 as your backend. 
 
 I'm also going to assume that you're comfortable with Javascript, have a basic knowledge of <a href="https://www.w3schools.com/js/js_json_intro.asp">JSON</a>, and have already installed Node.js. 
 
-This article  will walk you through the process of posting information to a JSON file and then retrieving it. It's not comprehensive &mdash; there are any number of ways
+This post will walk you through the process of posting information to a JSON file and then retrieving it. It's not comprehensive &mdash; there are any number of ways
 to read and write to a file &mdash; but it will get the job done, get you familiar with the process, and provide a jumping off point if you decide you'd like
 to learn more about backend development.  
 
-This article will show you how to:
+This post will show you how to:
 
 * <a href="#set-up-the-project">Set-up Your Project</a>
 * <a href="#install-express">Install Express</a>
@@ -51,7 +51,7 @@ The installation will prompt you through your setup. For this project, go ahead 
 ```
 
 At this prompt, change ***index.js*** to ***server.js*** This will be the name of your main file, 
-and is the name I will be using throughout this article. 
+and is the name I will be using throughout this post. 
 
 <p class = "note"><b>NOTE:</b> If you forget or accidentally miss this step, you can change the name in the <i>package.json</i> file, found in the main directory of your project. For more information about *package.json* go to <a href = "https://docs.npmjs.com/cli/v10/configuring-npm/package-json">package.json </a>
 in the npm docs.</p>
@@ -135,17 +135,17 @@ Add a script section to *index.html*, and paste the followinging code into it. I
     
       //Variables containing data in different formats.
       var numbers = ["1942", "1984", "1995"];
-      var singers = [{"name":"Paul McCartney","age": "81", "birthplace": "Liverpool"},{"name":"Taylor Swift ","age":"34","birthplace":"West Reading, PA"}];
+      var singers = [{"name":"Paul McCartney","age": "81", "birthplace": "Liverpool"},
+                    {"name":"Taylor Swift ","age":"34","birthplace":"West Reading, PA"}];
       var greeting = "Are we having fun yet?";
       var foods = {"food" : "chocolate", "taste":"very very good", "necessary": "true"};
     
       //Variable containing the info that will be posted
       var data = {numbers:numbers, singers:singers, greeting:greeting, foods:foods} 
       
-      /*To post to a file, you need the POST method,
-        headers that define the type of content, in this
-        case JSON, and the body, which defines the data 
-         you want to send to your JSON file.*/ 
+      /*To post to a file, you need the POST method, headers that define the type of 
+      content, in this case JSON, and the body, which defines the data you want to send
+       to your JSON file.*/ 
       fetch('/amendJsonFile', {                 //the url your sending your data to.
           method: 'POST',
           headers: {
@@ -179,7 +179,7 @@ and ease of retrieval, our key names match the names of the variables that hold 
 
 <p class = "note"><b>NOTE:</b> For demonstration purposes all four variables are posted, but this is arbitrary. You could just have easily sent one, or many more.</p>
 
-You're using the fetch API to send your request. The fetch API is straightforward and more or less replaces XMLHttpRequest. You give it the url you'll be sending your data to, (in this case *amendJsonFile*) define the type of content you're sending, define the data you're sending, process the response, and catch any errors. If you'd rather not receive a response, you can remove these lines of code:
+You're using the fetch API to send your request. The fetch API is straightforward and more or less replaces XMLHttpRequest. You give it the url you'll be sending your data to (in this case *amendJsonFile*), define the type of content you're sending, define the data you're sending, process the response, and catch any errors. If you'd rather not receive a response, you can remove these lines of code:
 
 ```javascript
 then(response => response.json())          
@@ -187,7 +187,7 @@ then(response => response.json())
 ```
 Note that the data has been stringified (`JSON.stringify(data)`) in order to pack it into an http request sent to the server.
 
-<p class = "note"><b>NOTE:</b> <a href="https://www.freecodecamp.org/news/how-to-fetch-data-from-an-api-using-the-fetch-api-in-javascript/#:~:text=The%20Fetch%20API%20is%20a,and%20fetch%20data%20from%20servers.">This article</a> by freeCodeCamp is an excellent resource for learning how to use fetch.</p>
+<p class = "note"><b>NOTE:</b> <a href="https://www.freecodecamp.org/news/how-to-fetch-data-from-an-api-using-the-fetch-api-in-javascript/#:~:text=The%20Fetch%20API%20is%20a,and%20fetch%20data%20from%20servers.">This post</a> by freeCodeCamp is an excellent resource for learning how to use fetch.</p>
 
 And now for the server side of things.
 ### <a id="server-side-javascript"></a>Server-side Javascript. 
@@ -196,7 +196,8 @@ In order to post and then write to a file, you will add a couple of lines of cod
 
 ```javascript
 var fs = require('fs');
- app.use(express.json());
+
+app.use(express.json());
 ```
 
 `var fs = require('fs');` allows us to read and write to a file.
@@ -357,7 +358,8 @@ The second variable, `key`, then pulls just the keys from that data.
 
  `file` is the JSON file you will be writing to. 
 
-I've documented the code so you can see each step in context. Essentially, the method reads, updates, and writes to the JSON file. But if that file doesn't exist, an error is thrown when it tries to read the file. So, first you check to see if the file exists. 
+I've documented the code so you can see each step in context. Essentially, the method reads, updates, and writes to the JSON file. But first you check to see if the file exists,
+because an error is thrown if it doesn't exist and needs to be handledm as you'll see in the code above.. 
 
 if the file doesn't exist, then `newString` is written to the JSON file. 
 
@@ -369,7 +371,7 @@ This is the code that allows you to update individual records in your file. With
 
 Finally, the data in `obj` is stringified again and written to the file. 
 
-This function covers all bases. It allows you to create the file, add more records, or update the records you've already written. You can add or amend one or multiple records. 
+This function covers all bases. It allows you to create the file or open it to add more records, or update the records you've already written. You can can add or amend one or multiple records. 
 
 Now let's see it in action. 
 
@@ -399,7 +401,7 @@ Finally, you should find a *myJson.json* file in the *public* folder of your pro
 
 Congratulations! You've successfully written to a JSON file.
 
-## <a id="read-from-your-json-file"></a>Read From Your JSON File
+## <a id="read-from-a-json-file"></a>Read From Your JSON File
 
 Now that you've set up your server and created a JSON file, getting information from that file is pretty straightforward. 
 
@@ -408,34 +410,33 @@ Paste the following code into the script section of your HTML file.
 ```javascript
 function getFromFile(){
       
-      const info = "singers"             //Defines the key of the object being retrieved.
-      const file = "myJson.json"       //Defines the file being retrieved from.
-      
-      fetch(file)
+  const info = "singers"             //Defines the key of the object being retrieved.
+  const file = "myJson.json"       //Defines the file being retrieved from.
+  
+  fetch(file)
 
-      .then(response => response.json())   //Receives a response
-      .then(data => {                      
-              
-        const obj = data[info];            //Parses the response
-        
-        //Prints the response to the browser.
-        document.getElementById("output").innerHTML = JSON.stringify(obj);
+  .then(response => response.json())   //Receives a response
+  .then(data => {                      
+          
+    const obj = data[info];            //Parses the response
+    
+    //Prints the response to the browser.
+    document.getElementById("output").innerHTML = JSON.stringify(obj);
         
       });
 ```
 
-In this function, you define the record you want to retrieve, and the file you want to retrieve it from. In our case, we're retrieving the object array, *singers* from the JSON file, *myJson.json*.  The file is fetched, and then the record stored as "singers" is extracted. 
+In this function, you define the record you want to retrieve, and the file you want to retrieve it from. In our case, we're retrieving the object array, *singers*, from the JSON file, *myJson.json*.  The file is fetched, and the record stored as *singers* is extracted. 
 
-If instead of a single record, you wanted to extract the entire file, instead of `const obj = data[info], the code would be `const obj = data`. 
+If instead of a single record, you wanted to extract the entire file, instead of `const obj = data[info]`, the code would be `const obj = data`. 
 
-Once extracted, the data
-is yours to manipulate. 
+Once extracted, the data is yours to manipulate. 
 
-For the purposes of this article, the variable `obj` is stringified so it can be printed to the web page. This is only necessary if you want to use it as a string. 
+Note that for the purposes of this example, the variable `obj` is stringified so it can be printed to the web page. This is only necessary if you want to use it as a string. 
 
 Now, start the server if it's not already running. 
 
-```text
+```text 
 node server.js
 ```
 
@@ -453,9 +454,9 @@ Congratulations! You've successfully read from a JSON file.
 
 ## Summary
 
-In this article you've learned how to send data to the server from the client side, how to extract that data and write to a file on the server side, and
+In this post you've learned how to send data to the server from the client side, how to extract that data and write to a file on the server side, and
 how to retrieve that data from the file you created. Again, this is only one way to do it. What I've tried to do is show both sides of the 
-equation, the client-side and the server side, with enough explanation so that you understand how it works, and with a couple of resources thrown in if you'd like
+equation, the client-side and the server side, with enough explanation so that you understand how it works. I've also referenced a few other resources in case you'd like
 a deeper understanding of the steps involved.
 
 Happy Coding.
