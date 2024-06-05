@@ -359,7 +359,7 @@ The second variable, `key`, then pulls just the keys from that data.
  `file` is the JSON file you will be writing to. 
 
 I've documented the code so you can see each step in context. Essentially, the method reads, updates, and writes to the JSON file. But first you check to see if the file exists,
-because an error is thrown if it doesn't exist and needs to be handledm as you'll see in the code above.. 
+because an error is thrown if it doesn't exist and needs to be handled, as you'll see in the code above.
 
 if the file doesn't exist, then `newString` is written to the JSON file. 
 
