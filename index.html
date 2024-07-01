@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css"> 
+    <link rel="stylesheet" href="css/markdown.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <script src="https://kit.fontawesome.com/ec5934eef1.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <div id="page-container">
+    <div id="content-wrap" >
+      <div id="but" class="icon" onclick="toggleFunction()" ><i class="fa-solid fa-bars" stye="pointer-events: none; margin-right: 15px;"></i></div>
+      <div id ="header" class="header">
+       <div class="middle">
+          <div class="title">Tessa Murphy<br><span class="tag">Writer &bull; Editor &bull; Web Designer</span></div>
+        </div>
+      </div>
+      <div class=""main"></div>     
+      <div id="sidenav" class="sidenav">
+        
+   
+       <ul > 
+        <li id="home" name="nav" class="active">Home</li>
+        <li id="readwrite" name="nav">How to Write-To and Read-From a JSON file</li>
+        
+        
+       </ul>
+      </div>
+      <div id="main" class="main">
+        
+      </div>
+    </div>
+    <div id="footer" class="footer">
+      <div class="row">
+        <div class="column">
+          <a href="TessaMurphyResume_2024.pdf">resume</a><br>
+          <a href="https://www.linkedin.com/in/tessa-murphy-40730112/" target="_blank">LinkedIn</a></div>
+        
+        <div class="column">Phone: 206-799-3539<br>email: tessamurphy56@gmail.com</div>
+
+        <div class="column">&#9400;Tessa Murphy 2024</div>
+      </div>
+    </div> 
+  </div>  
+  
+<script>
+
+window.addEventListener('resize', function(event){
+  if(document.documentElement.clientWidth < 700){
+    //document.getElementById("sidenav").style.transition = "all 2s ease-in-out";
+    document.getElementById("sidenav").style.height = "0";
+  } else {
+      document.getElementById("sidenav").style.height = "100%"; 
+  }
+});
+  
+function toggleFunction(){
+  var nav = document.getElementsByName("nav");
+  var element = document.getElementById("sidenav");
+  var count = (nav.length * 4) * 2.2;
+  var count = Math.round(count * 10) / 10;
+  var ht = count.toString() + "vh";
+  
+  
+ if(window.matchMedia("(max-width: 700px)")){   
+   element.style.height = (element.style.height == ht) ? 0 : ht;
+ } else{
+   element.style.height = "100%";}
+}
+
+document.getElementById("sidenav").addEventListener("click", function() {
+    
+    var el = event.target.id;
+    
+    var nav = document.getElementsByName("nav");
+      for(i=0; i <nav.length; i++){
+        nav[i].classList.remove("active");
+      }
+      event.target.classList.add("active")
+      getHTML(el)
+    });
+
+
+function getHTML(el){
+  
+  nm = el + ".html";
+  
+  
+  
+  fetch(nm).then(function (response) {
+  // The API call was successful!
+  return response.text();
+  }).then(function (html) {
+    
+  // This is the HTML from our response as a text string
+  document.getElementById("main").innerHTML = html;
+  console.log(html);
+  }).then(function (){
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  }).then(function (){
+    //toggleFunction(); 
+  }).catch(function (err) {
+  // There was an error
+  console.warn('Something went wrong.', err);
+  });
+}
+
+ window.addEventListener("DOMContentLoaded",  function(){ 
+  fetch("home.html").then(function (response) {
+  return response.text();
+  }).then(function (html) {
+    
+  // This is the HTML from our response as a text string
+  document.getElementById("main").innerHTML = html;
+  console.log(html);
+  }).catch(function (err) {
+  // There was an error
+  console.warn('Something went wrong.', err);
+  });
+});
+
+
+document.getElementbyID("but").addEventListener(click, function(){
+
+  const listItems = document.querySelectorAll('.sidenav li');
+  const count = listItems.length;
+   var element = document.getElementById("sidenav");
+   element.classList.toggle("grow");
+});
+
+
+   
+  //element.style.height = ht;
+  //element.style.height.toggle(ht);
+  
+ // element.style..toggle(ht);*/
+
+
+
+
+  </script>
+</body>
+</html>
