@@ -397,7 +397,7 @@ Click the **Post** button. You should get an alert that says "Data Posted to Fil
 
 Finally, you should find a *myJson.json* file in the *public* folder of your project. Open it, and you should see something like this:
 
-![JSON File](images/jsonfile.png)
+<img src="images/jsonfile.png" alt="JSON File">
 
 Congratulations! You've successfully written to a JSON file.
 
@@ -448,7 +448,7 @@ http://localhost:3000/
 
 Click the **Get** button. Your page should look like this:
 
-![Output of the JSON file](images/getOutput.png)
+<img src="images/getOutput.png" alt="Output of the JSON file">
 
 Congratulations! You've successfully read from a JSON file.
 
